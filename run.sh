@@ -8,4 +8,4 @@ fi
 target="$1"
 sz=$(blockdev --getsz $target)
 
-dmsetup create test-device --table "0 $sz linear-stats $1"
+dmsetup create proxy-device --table "0 $sz linear-stats $1"
