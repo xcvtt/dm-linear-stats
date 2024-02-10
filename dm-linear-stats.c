@@ -27,9 +27,8 @@ static struct kobject *stats_kobj;
 static void update_bio_stats(struct bio *bio)
 {
         long bytes = bio->bi_iter.bi_size;
-        bool is_write = op_is_write(bio->bi_opf);
 
-        if (is_write) {
+        if (op_is_write(bio->bi_opf)) {
                 DMINFO("OP_WRITE");
                 stats.write_count++;
                 stats.write_bytes += bytes;
@@ -97,7 +96,7 @@ static int linear_target_ctr(struct dm_target *ti, unsigned int argc, char **arg
 
         ret = sysfs_create_file(stats_kobj, &stats_attr.attr);
         if (ret) {
-                DMCRIT("failed to create sysfs file");
+                DMERR("failed to create sysfs file");
                 goto bad;
         }
 
