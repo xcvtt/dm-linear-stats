@@ -42,6 +42,11 @@ echo Hello World > hello
 dd if=hello of=/dev/mapper/proxy-device bs=512 count=1
 ```
 
+Read from our proxy device
+```
+dd if=/dev/mapper/proxy-device of=proxy-out bs=512 count=1
+```
+
 Check contents of underlying device
 ```
 cat bd
@@ -61,4 +66,14 @@ rmmod dm_linear_stats
 Remove the loop mapping
 ```
 losetup -d /dev/loop0
+```
+
+Check the read/write stats
+```
+cat /sys/module/dm_linear_stats/stat/stats
+```
+
+To reload the module and recreate our device
+```
+sudo ./run.sh /dev/loop0
 ```
